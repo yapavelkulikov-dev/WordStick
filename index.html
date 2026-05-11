@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WordStick</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SCREEN: HOME                                                          -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <div id="screen-home" class="screen active">
+    <div class="row spaced">
+      <span class="logo">Word<span>Stick</span></span>
+      <button class="btn-icon" id="btn-stats" aria-label="Статистика">📊</button>
+    </div>
+
+    <!-- Mode tabs -->
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab active" role="tab" data-mode="words">Слова</button>
+      <button class="mode-tab" role="tab" data-mode="phrases">Фразы</button>
+    </div>
+
+    <!-- Level & category selectors -->
+    <div class="row" style="gap:12px">
+      <div class="field flex-1">
+        <label>Уровень</label>
+        <select id="sel-level">
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+          <option value="C1">C1</option>
+          <option value="C2">C2</option>
+        </select>
+      </div>
+      <div class="field flex-1">
+        <label>Категория</label>
+        <select id="sel-category"></select>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div>
+      <div class="progress-text" id="home-progress-text">...</div>
+      <div class="progress-bar-wrap" style="margin-top:8px">
+        <div class="progress-bar-fill" id="home-progress-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Action cards -->
+    <div id="card-learn" class="card card-action">
+      <div class="card-title">📚 Учить новые слова</div>
+      <div class="card-sub" id="card-learn-sub">...</div>
+    </div>
+    <div id="card-review" class="card card-action" style="display:none">
+      <div class="card-title">🔁 Повторять</div>
+      <div class="card-sub" id="card-review-sub">...</div>
+    </div>
+
+    <!-- Session size selector -->
+    <div>
+      <div class="progress-text" style="margin-bottom:10px">Слов за сессию:</div>
+      <div class="session-sizes" id="session-sizes">
+        <button class="session-size-btn" data-n="5">5</button>
+        <button class="session-size-btn selected" data-n="15">15</button>
+        <button class="session-size-btn" data-n="25">25</button>
+        <button class="session-size-btn" data-n="50">50</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SCREEN: STATS                                                         -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <div id="screen-stats" class="screen">
+    <div class="row spaced">
+      <h1 style="font-size:1.3rem;font-weight:600">Моя статистика</h1>
+      <button class="btn-ghost" id="btn-stats-close">← Назад</button>
+    </div>
+
+    <div class="card">
+      <div class="progress-text">Активный уровень:</div>
+      <div style="font-size:1.4rem;font-weight:600;color:var(--accent);margin-top:4px" id="stats-current-level">A1</div>
+      <div class="progress-text" style="margin-top:4px;font-size:0.8rem">Самый высокий уровень с ≥80% выученных слов</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-tile">
+        <div class="num" id="stats-total-words">0</div>
+        <div class="lbl">Слов выучено</div>
+      </div>
+      <div class="stat-tile">
+        <div class="num" id="stats-total-phrases">0</div>
+        <div class="lbl">Фраз выучено</div>
+      </div>
+      <div class="stat-tile">
+        <div class="num" id="stats-review-words">0</div>
+        <div class="lbl">На повторение</div>
+      </div>
+      <div class="stat-tile">
+        <div class="num" id="stats-review-phrases">0</div>
+        <div class="lbl">Фразы на повтор</div>
+      </div>
+    </div>
+
+    <!-- Level progress -->
+    <div style="display:flex;flex-direction:column;gap:14px" id="stats-levels"></div>
+
+    <!-- Export / Import -->
+    <div class="row" style="gap:10px;margin-top:8px">
+      <button class="btn-secondary flex-1" id="btn-export">📤 Экспорт</button>
+      <button class="btn-secondary flex-1" id="btn-import">📥 Импорт</button>
+    </div>
+    <input type="file" id="import-file" accept=".json" style="display:none">
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SCREEN: STUDY (знакомство со словом)                                  -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <div id="screen-study" class="screen">
+    <div class="session-header">
+      <button class="btn-ghost" id="btn-study-quit">← Прервать</button>
+      <span class="session-counter" id="study-counter">1 из 15</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="study-progress-bar" style="width:0%"></div>
+    </div>
+
+    <div class="study-card" id="study-card">
+      <div class="word-visual" id="study-visual">🔧</div>
+      <div class="word-en" id="study-en">wrench</div>
+      <div class="row" style="gap:8px;justify-content:center">
+        <div class="word-ru" id="study-ru">гаечный ключ</div>
+        <button class="btn-icon" id="btn-study-speak" style="width:36px;height:36px;font-size:1rem" aria-label="Озвучить">🔊</button>
+      </div>
+      <div class="word-forms" id="study-forms" style="display:none"></div>
+    </div>
+
+    <button class="btn-ghost" id="btn-study-examples">📖 Примеры и фразы</button>
+
+    <div class="row" style="gap:10px">
+      <button class="btn-secondary flex-1" id="btn-study-prev">← Назад</button>
+      <button class="btn-primary flex-1" id="btn-study-next">Дальше →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SCREEN: QUIZ                                                          -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <div id="screen-quiz" class="screen">
+    <div class="session-header">
+      <button class="btn-ghost" id="btn-quiz-quit">← Прервать</button>
+      <span class="session-counter" id="quiz-counter">Закрыто 0 из 15</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="quiz-progress-bar" style="width:0%"></div>
+    </div>
+
+    <div class="study-card" id="quiz-card">
+      <!-- EN→RU mode -->
+      <div id="quiz-word-area">
+        <div class="word-visual" id="quiz-visual">🔧</div>
+        <div class="row" style="gap:8px;justify-content:center">
+          <div class="word-en" id="quiz-en">wrench</div>
+          <button class="btn-icon" id="btn-quiz-speak" style="width:36px;height:36px;font-size:1rem" aria-label="Озвучить">🔊</button>
+        </div>
+      </div>
+      <!-- Audio mode: big speak button, no text -->
+      <div id="quiz-audio-area" style="display:none">
+        <button class="btn-icon" id="btn-quiz-audio" style="width:80px;height:80px;font-size:2.5rem;border-radius:50%" aria-label="Слушать">🔊</button>
+        <div class="word-ru" style="margin-top:8px;color:var(--ink-soft)">Слушай и выбирай</div>
+      </div>
+      <div class="correct-dots" id="quiz-dots" style="justify-content:center"></div>
+    </div>
+
+    <div class="quiz-options" id="quiz-options"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SCREEN: PHRASE BUILDER                                                -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <div id="screen-phrase" class="screen">
+    <div class="session-header">
+      <button class="btn-ghost" id="btn-phrase-quit">← Прервать</button>
+      <span class="session-counter" id="phrase-counter">Фраза 1 из 10</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="phrase-progress-bar" style="width:0%"></div>
+    </div>
+
+    <div class="phrase-prompt-card" id="phrase-ru"></div>
+
+    <!-- Assembly zone -->
+    <div class="phrase-assembly" id="phrase-assembly">
+      <span class="phrase-assembly-placeholder">Нажимай на слова ниже →</span>
+    </div>
+
+    <!-- Word pool -->
+    <div class="phrase-words" id="phrase-pool"></div>
+
+    <!-- Hint block -->
+    <div class="hint-block" id="phrase-hint"></div>
+
+    <!-- Action row -->
+    <div class="phrase-actions">
+      <button class="btn-icon" id="btn-phrase-hint" title="Подсказка">💡</button>
+      <button class="btn-icon" id="btn-phrase-speak" title="Озвучить">🔊</button>
+      <button class="btn-icon" id="btn-phrase-reset" title="Сброс">↺</button>
+      <button class="btn-primary flex-1" id="btn-phrase-check">Проверить</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SCREEN: FINISH                                                        -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <div id="screen-finish" class="screen">
+    <div class="finish-icon">🌿</div>
+    <div class="finish-title">Сессия завершена</div>
+    <div class="finish-stats" id="finish-stats">
+      <div class="finish-stat">
+        <span>Закрыто:</span>
+        <span id="fin-closed">0 из 0</span>
+      </div>
+      <div class="finish-stat">
+        <span>Точность:</span>
+        <span id="fin-accuracy">0%</span>
+      </div>
+      <div class="finish-stat" id="fin-review-row" style="display:none">
+        <span>Отправлено на повтор:</span>
+        <span id="fin-review">0</span>
+      </div>
+    </div>
+    <button class="btn-primary" id="btn-continue-session">Продолжить</button>
+    <button class="btn-secondary" style="margin-top:10px" id="btn-go-home">На главную</button>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- MODAL: Examples                                                         -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modal-examples">
+  <div class="modal-sheet">
+    <div class="row spaced">
+      <h2>Примеры</h2>
+      <button class="btn-ghost" id="btn-modal-close">✕</button>
+    </div>
+    <div id="modal-examples-list"></div>
+  </div>
+</div>
+
+<!-- Data files -->
+<script src="data/categories.js"></script>
+<script src="data/words.js"></script>
+<script src="data/phrases.js"></script>
+
+<!-- Stub files for future levels -->
+<script src="data/words-a2.js" onerror="window.WORDS_A2=[]"></script>
+<script src="data/words-b1.js" onerror="window.WORDS_B1=[]"></script>
+
+<!-- App -->
+<script src="app.js"></script>
+</body>
+</html>
