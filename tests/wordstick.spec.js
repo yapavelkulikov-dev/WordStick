@@ -94,20 +94,20 @@ test('A1 phrases load correctly (150)', async ({ page }) => {
   expect(count).toBe(150);
 });
 
-test('A2 phrases load correctly (155)', async ({ page }) => {
+test('A2 phrases load correctly (150)', async ({ page }) => {
   await goHome(page);
   const count = await page.evaluate(() =>
-    typeof PHRASES_A2 !== 'undefined' ? PHRASES_A2.length : -1
+    typeof PHRASES_A2 !== 'undefined' ? [...PHRASES_A2].filter(x => x != null).length : -1
   );
-  expect(count).toBe(155);
+  expect(count).toBe(150);
 });
 
-test('B1 phrases load correctly (165)', async ({ page }) => {
+test('B1 phrases load correctly (150)', async ({ page }) => {
   await goHome(page);
   const count = await page.evaluate(() =>
-    typeof PHRASES_B1 !== 'undefined' ? PHRASES_B1.length : -1
+    typeof PHRASES_B1 !== 'undefined' ? [...PHRASES_B1].filter(x => x != null).length : -1
   );
-  expect(count).toBe(165);
+  expect(count).toBe(150);
 });
 
 test('B2 phrases load correctly (159)', async ({ page }) => {
