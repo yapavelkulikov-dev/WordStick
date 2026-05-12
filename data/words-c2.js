@@ -21997,7 +21997,6 @@ const WORDS_C2 = [
   { id:'nitrification-denitrification-system', en:'nitrification denitrification system', ru:'система нитрификации-денитрификации', image:null, emoji:'🔄', imageEligible:false, level:'C2', category:'environmental-biotechnology',
     forms:{ type:'noun' },
     examples:['The nitrification denitrification system represents a foundational concept in advanced research.','Scholars have extensively studied nitrification denitrification system across multiple paradigms.','Applying nitrification denitrification system in practice requires deep domain expertise.','New developments in nitrification denitrification system continue to reshape the field.'] },
-,
   { id:'devitrification', en:'devitrification', ru:'девитрификация', image:null, emoji:'🔬', imageEligible:false, level:'C2', category:'glass-science',
     forms:{ type:'noun' },
     examples:['The devitrification represents a foundational concept in advanced research.',

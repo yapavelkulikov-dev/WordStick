@@ -2362,12 +2362,6 @@ const WORDS_A1 = [
     examples:['Go to the market.','Farmers market on Saturday.','The market is closed.'] },
 
 
-  { id:'fruit',    en:'fruit',    ru:'фрукт',            image:null,     emoji:'🍎', imageEligible:false, level:'A1', category:'food-basic',
-    forms:{ type:'noun', plural:'fruits' },
-    examples:['Grab some fruit.','Fresh fruit in the break room.','Fruit salad for lunch.'] },
-  { id:'hospital',  en:'hospital',  ru:'больница',         image:null,     emoji:'🏥', imageEligible:true,  level:'A1', category:'doctor',
-    forms:{ type:'noun', plural:'hospitals' },
-    examples:['Take him to the hospital.','Call the hospital.','Nearest hospital is 5 miles.'] },
 
 ];
 
