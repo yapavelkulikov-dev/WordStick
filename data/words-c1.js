@@ -7692,7 +7692,7 @@ const WORDS_C1 = [
   { id:'nickel-base-superalloy', en:'nickel-base superalloy', ru:'никелевый жаропрочный сплав', image:null, emoji:'⚙️', imageEligible:false, level:'C1', category:'engineer-mechanics',
     forms:{ type:'noun' },
     examples:['Nickel-base superalloy is foundational knowledge for senior professionals in this field.','The team applied nickel-base superalloy methods to solve the complex problem.','A deep understanding of nickel-base superalloy underpins expert-level practice.','She was awarded a prize for her research on nickel-base superalloy.'] },
-  { id:'gamma-prime-precipitate', en:'gamma prime precipitate', ru:'γ' фаза', image:null, emoji:'🔬', imageEligible:false, level:'C1', category:'engineer-mechanics',
+  { id:'gamma-prime-precipitate', en:'gamma prime precipitate', ru:"γ' фаза", image:null, emoji:'🔬', imageEligible:false, level:'C1', category:'engineer-mechanics',
     forms:{ type:'noun' },
     examples:['Gamma prime precipitate is foundational knowledge for senior professionals in this field.','The team applied gamma prime precipitate methods to solve the complex problem.','A deep understanding of gamma prime precipitate underpins expert-level practice.','She was awarded a prize for her research on gamma prime precipitate.'] },
   { id:'directional-solidification', en:'directional solidification', ru:'направленная кристаллизация', image:null, emoji:'🏭', imageEligible:false, level:'C1', category:'engineer-mechanics',

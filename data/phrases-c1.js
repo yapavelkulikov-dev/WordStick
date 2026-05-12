@@ -246,7 +246,6 @@ const PHRASES_C1 = [
     examples:['The research transcends disciplinary boundaries to address complex problems.','Effective climate solutions must transcend disciplinary boundaries.','The theoretical framework transcends disciplinary boundaries.','Systems thinking transcends disciplinary boundaries by design.'] },
   { id:'flag-as-a-concern', en:'flag as a concern', ru:'отметить как проблему', emoji:'🚩', level:'C1',
     examples:['The inspector flagged the weld quality as a concern.','Reviewers flagged the sample size as a concern.','The risk officer flagged cyber vulnerabilities as a concern.','Clinicians flagged the drug interaction as a concern.'] },
-]
   { id:'be-symptomatic-of', en:'be symptomatic of', ru:'быть симптомом', emoji:'🩺', level:'C1',
     examples:['The data anomaly is symptomatic of a deeper structural problem.','The high turnover rate is symptomatic of poor organizational culture.','The resistance to reform is symptomatic of institutional inertia.','The measurement inconsistency is symptomatic of inadequate calibration.'] },
   { id:'maintain-fidelity-to', en:'maintain fidelity to', ru:'сохранять верность', emoji:'🎵', level:'C1',

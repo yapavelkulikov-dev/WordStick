@@ -80,9 +80,22 @@ let state = loadState();
 
 // ─── Data helpers ─────────────────────────────────────────────────────────────
 function wordsForLevel(level) {
-  if (level === 'A1') return WORDS_A1;
-  if (level === 'A2') return window.WORDS_A2 || [];
-  if (level === 'B1') return window.WORDS_B1 || [];
+  if (level === 'A1') return (typeof WORDS_A1 !== 'undefined') ? WORDS_A1 : [];
+  if (level === 'A2') return (typeof WORDS_A2 !== 'undefined') ? WORDS_A2 : [];
+  if (level === 'B1') return (typeof WORDS_B1 !== 'undefined') ? WORDS_B1 : [];
+  if (level === 'B2') return (typeof WORDS_B2 !== 'undefined') ? WORDS_B2 : [];
+  if (level === 'C1') return (typeof WORDS_C1 !== 'undefined') ? WORDS_C1 : [];
+  if (level === 'C2') return (typeof WORDS_C2 !== 'undefined') ? WORDS_C2 : [];
+  return [];
+}
+
+function phrasesForLevel(level) {
+  if (level === 'A1') return (typeof PHRASES_A1 !== 'undefined') ? PHRASES_A1 : [];
+  if (level === 'A2') return (typeof PHRASES_A2 !== 'undefined') ? PHRASES_A2 : [];
+  if (level === 'B1') return (typeof PHRASES_B1 !== 'undefined') ? PHRASES_B1 : [];
+  if (level === 'B2') return (typeof PHRASES_B2 !== 'undefined') ? PHRASES_B2 : [];
+  if (level === 'C1') return (typeof PHRASES_C1 !== 'undefined') ? PHRASES_C1 : [];
+  if (level === 'C2') return (typeof PHRASES_C2 !== 'undefined') ? PHRASES_C2 : [];
   return [];
 }
 
@@ -91,8 +104,8 @@ function wordsForSelection(level, category) {
 }
 
 function phrasesForSelection(level, category) {
-  return PHRASES_A1.filter(p =>
-    p.level === level && (!category || p.category === category)
+  return phrasesForLevel(level).filter(p =>
+    (!category || p.category === category)
   );
 }
 
@@ -260,8 +273,8 @@ function startReviewSession() {
   const mode = state.currentMode;
   const store = mode === 'words' ? state.words : state.phrases;
   const allItems = mode === 'words'
-    ? WORDS_A1
-    : PHRASES_A1;
+    ? wordsForLevel(state.currentLevel)
+    : phrasesForLevel(state.currentLevel);
 
   const reviewItems = allItems.filter(i => store[i.id]?.needsReview);
   const pool = shuffleArray(reviewItems).slice(0, state.sessionSize);
@@ -271,7 +284,7 @@ function startReviewSession() {
   session = {
     mode,
     items: pool,
-    allWords: WORDS_A1,
+    allWords: wordsForLevel(state.currentLevel),
     phase: mode === 'words' ? 'study' : 'phrase',
     studyIndex: 0,
     active: pool.map(i => ({ ...i, _correct:0, _mistakes:0 })),
